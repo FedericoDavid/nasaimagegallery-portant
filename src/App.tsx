@@ -1,11 +1,10 @@
+import HomeContainer from "./containers/HomeContainer";
+
 import "./App.css";
+import "./index.css";
 
 function App() {
-  return (
-    <div>
-      <p>Main</p>
-    </div>
-  );
+  return <HomeContainer />;
 }
 
 export default App;
