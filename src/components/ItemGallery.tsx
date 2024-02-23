@@ -74,7 +74,9 @@ const ItemGallery: React.FC<ItemGalleryProps> = ({
         )}
       </div>
       <div className="flex gap-2 mt-1 mb-3 items-center">
-        <p className="font-semibold capitalize">{title}</p>
+        <p className="font-semibold capitalize">
+          <span className="bg-white bg-opacity-15 p-0.5 ">{title}</span>
+        </p>
       </div>
     </div>
   );

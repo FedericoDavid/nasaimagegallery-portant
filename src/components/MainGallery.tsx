@@ -17,10 +17,10 @@ const breakpointColumns = {
   500: 1,
 };
 
-const MainGallery = () => {
+const MainGallery: React.FC = () => {
   const [showFavorites, setShowFavorites] = useState<boolean>(false);
 
-  const { imagesList, isLoading, error } = useNasaImages();
+  const { imagesList, searchTerm, isLoading, error } = useNasaImages();
   const {
     state: { favorites: favoritesList },
   } = useFavorites();
@@ -38,7 +38,7 @@ const MainGallery = () => {
 
   if ((showFavorites && !favoritesList.length) || !imagesList.length)
     return (
-      <div className="p-4 flex flex-col justify-center text-center bg-black bg-opacity-30 shadow-md rounded-lg mt-24 h-80 sm:rounded-none sm:rounded-r-lg sm:px-20">
+      <div className="p-4 flex flex-col justify-center text-center bg-black bg-opacity-30 shadow-md rounded-lg mt-18 h-80 sm:rounded-none sm:rounded-r-lg sm:px-20">
         <div className="flex justify-end mb-4">
           <Toggle
             textLeft="All"
@@ -56,10 +56,25 @@ const MainGallery = () => {
     );
 
   return (
-    <div className="mt-24">
-      <div className="flex justify-end mb-4">
+    <div className="mt-16">
+      <div
+        className={`
+          flex
+          flex-col
+          sm:flex-row
+          ${showFavorites ? "justify-end" : "justify-between"} 
+          mb-4
+        `}
+      >
+        {!showFavorites && searchTerm && (
+          <h2 className="font-medium text-3xl leading-none ml-3 pb-3 sm:pb-0">
+            <span className="bg-black bg-opacity-50 p-1">
+              {searchTerm} is today's planet
+            </span>
+          </h2>
+        )}
         <Toggle
-          textLeft="All"
+          textLeft="Newest"
           textRight="Favorites"
           isFavorite={showFavorites}
           onHandleChange={handleToggleChange}

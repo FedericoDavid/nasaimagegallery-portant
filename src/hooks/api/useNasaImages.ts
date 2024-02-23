@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ErrorState, ImageItem, NasaImageCollection } from "../../types";
 
-export const searchTerms = [
-  "mars",
-  "earth",
-  "jupiter",
-  "saturn",
-  "orion",
-  "mercury",
-  "neptune",
-  "uranus",
-  "venus",
+export const searchTermsKeys = [
+  "Mars",
+  "Earth",
+  "Jupiter",
+  "Saturn",
+  "Orion",
+  "Mercury",
+  "Neptune",
+  "Uranus",
+  "Venus",
 ];
 
 const useNasaImages = () => {
@@ -19,10 +19,11 @@ const useNasaImages = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<ErrorState>(null);
 
+  const randomPlanet =
+    searchTermsKeys[Math.floor(Math.random() * searchTermsKeys.length)];
+
   const getUrl = () => {
     const pageSize = 24;
-    const randomPlanet =
-      searchTerms[Math.floor(Math.random() * searchTerms.length)];
     const searchTerm = `${randomPlanet} planet`;
 
     return `${
@@ -59,7 +60,7 @@ const useNasaImages = () => {
     getListImages();
   }, []);
 
-  return { imagesList, isLoading, error };
+  return { imagesList, searchTerm: randomPlanet, isLoading, error };
 };
 
 export default useNasaImages;
