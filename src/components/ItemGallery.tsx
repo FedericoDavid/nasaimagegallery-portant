@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
-import { TailSpin } from "react-loader-spinner";
+import useFavorites from "../hooks/useFavorites";
 
 interface ItemGalleryProps {
   image: string;
@@ -15,12 +15,16 @@ const ItemGallery: React.FC<ItemGalleryProps> = ({
   nasa_id,
   description,
 }) => {
-  const [postHovered, setPostHovered] = useState(true);
-  const [isSavingPost, setIsSavingPost] = useState(false);
+  const [postHovered, setPostHovered] = useState(false);
 
-  const onSavePin = () => {
-    setIsSavingPost(true);
-    setIsSavingPost(false);
+  const { addFavorite, removeFavorite, isFavorite } = useFavorites();
+
+  const handleFavorite = () => {
+    if (isFavorite(nasa_id)) {
+      removeFavorite(nasa_id);
+    } else {
+      addFavorite({ image, title, nasa_id, description });
+    }
   };
 
   return (
@@ -31,22 +35,20 @@ const ItemGallery: React.FC<ItemGalleryProps> = ({
         className="relative cursor-pointer w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
       >
         {image && <img className="rounded-lg w-full" alt={title} src={image} />}
-        {postHovered && (
+        {(isFavorite(nasa_id) || postHovered) && (
           <div className="absolute top-0 right-0 p-2">
             <div
-              onClick={onSavePin}
-              className="absolute top-0 right-0 m-2 text-gray-400 hover:text-red-500 p-1"
+              onClick={handleFavorite}
+              className="absolute top-0 right-0 m-2 p-1"
             >
-              {isSavingPost ? (
-                <TailSpin color="#fff" height={26} width={26} />
-              ) : postHovered ? (
+              {isFavorite(nasa_id) ? (
                 <IoMdHeart
-                  className="text-xl"
+                  className="text-xl text-red-500"
                   style={{ width: "26px", height: "26px" }}
                 />
               ) : (
                 <IoMdHeartEmpty
-                  className="text-xl"
+                  className="text-xl text-gray-400 hover:text-red-500"
                   style={{ width: "26px", height: "26px" }}
                 />
               )}
