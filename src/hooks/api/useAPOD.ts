@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
-import { APOD } from "../../types/apod";
-
-type ErrorState = AxiosError | Error | null;
+import { APOD, ErrorState } from "../../types";
 
 const useAPOD = (date: string) => {
   const [apod, setApod] = useState<APOD | null>(null);
