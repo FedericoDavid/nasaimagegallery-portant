@@ -13,6 +13,13 @@ export type APOD = {
   url: string;
 };
 
+export type ImageItem = {
+  imageUrl: string;
+  title: string;
+  nasa_id: string;
+  description: string;
+};
+
 export type NasaImageData = {
   center: string;
   title: string;

@@ -1,47 +1,64 @@
 import React, { useState } from "react";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
-import useFavorites from "../hooks/useFavorites";
+import { useFavorites } from "../context/FavoritesContext";
+// import { useNavigate } from "react-router-dom";
 
 interface ItemGalleryProps {
-  image: string;
+  imageUrl: string;
   title: string;
   nasa_id: string;
   description: string;
 }
 
 const ItemGallery: React.FC<ItemGalleryProps> = ({
-  image,
+  imageUrl,
   title,
   nasa_id,
   description,
 }) => {
   const [postHovered, setPostHovered] = useState(false);
 
-  const { addFavorite, removeFavorite, isFavorite } = useFavorites();
+  // const navigate = useNavigate();
+  const {
+    state: { favorites },
+    dispatch,
+  } = useFavorites();
 
-  const handleFavorite = () => {
-    if (isFavorite(nasa_id)) {
-      removeFavorite(nasa_id);
+  const isFavorite = favorites.some((item) => item.nasa_id === nasa_id);
+
+  // const handleImageClick = () => navigate(`/image/${nasa_id}`);
+
+  const toggleFavorite = () => {
+    if (isFavorite) {
+      dispatch({ type: "REMOVE_FAVORITE", payload: { nasa_id } });
     } else {
-      addFavorite({ image, title, nasa_id, description });
+      dispatch({
+        type: "ADD_FAVORITE",
+        payload: { imageUrl, title, nasa_id, description },
+      });
     }
   };
 
   return (
-    <div className="m-3">
+    <div
+      className="m-3"
+      // onClick={handleImageClick}
+    >
       <div
         onMouseEnter={() => setPostHovered(true)}
         onMouseLeave={() => setPostHovered(false)}
         className="relative cursor-pointer w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
       >
-        {image && <img className="rounded-lg w-full" alt={title} src={image} />}
-        {(isFavorite(nasa_id) || postHovered) && (
+        {imageUrl && (
+          <img className="rounded-lg w-full" alt={title} src={imageUrl} />
+        )}
+        {(isFavorite || postHovered) && (
           <div className="absolute top-0 right-0 p-2">
             <div
-              onClick={handleFavorite}
+              onClick={toggleFavorite}
               className="absolute top-0 right-0 m-2 p-1"
             >
-              {isFavorite(nasa_id) ? (
+              {isFavorite ? (
                 <IoMdHeart
                   className="text-xl text-red-500"
                   style={{ width: "26px", height: "26px" }}

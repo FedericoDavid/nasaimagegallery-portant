@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { ErrorState, NasaImageCollection, NasaImageItem } from "../../types";
+import { ErrorState, ImageItem, NasaImageCollection } from "../../types";
 
 export const searchTerms = [
   "mars",
@@ -15,7 +15,7 @@ export const searchTerms = [
 ];
 
 const useNasaImages = () => {
-  const [imagesList, setImagesList] = useState<NasaImageItem[]>([]);
+  const [imagesList, setImagesList] = useState<ImageItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<ErrorState>(null);
 
@@ -34,7 +34,14 @@ const useNasaImages = () => {
     const getListImages = async () => {
       try {
         const { data } = await axios.get<NasaImageCollection>(getUrl());
-        const items = data.collection.items;
+        const items = data.collection.items.map((item) => ({
+          nasa_id: item.data[0].nasa_id,
+          title: item.data[0].title,
+          description: item.data[0].description,
+          imageUrl:
+            item.links.find((link) => link.rel === "preview")?.href ||
+            "/public/images/notfound.png",
+        }));
 
         setImagesList(items);
       } catch (error) {

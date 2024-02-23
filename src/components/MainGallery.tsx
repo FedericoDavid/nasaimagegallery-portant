@@ -1,7 +1,12 @@
+import { useState } from "react";
 import Masonry from "react-masonry-css";
-import useNasaImages from "../hooks/api/useNasaImages";
-import ItemGallery from "./ItemGallery";
+
+import Toggle from "./common/Toggle";
 import Spinner from "./common/Spinner";
+import ItemGallery from "./ItemGallery";
+
+import useNasaImages from "../hooks/api/useNasaImages";
+import { useFavorites } from "../context/FavoritesContext";
 
 const breakpointColumns = {
   default: 4,
@@ -13,9 +18,16 @@ const breakpointColumns = {
 };
 
 const MainGallery = () => {
-  const { imagesList, isLoading, error } = useNasaImages();
+  const [showFavorites, setShowFavorites] = useState<boolean>(false);
 
-  console.log(imagesList);
+  const { imagesList, isLoading, error } = useNasaImages();
+  const {
+    state: { favorites: favoritesList },
+  } = useFavorites();
+
+  const handleToggleChange = () => setShowFavorites(!showFavorites);
+
+  const displayedImages = showFavorites ? favoritesList : imagesList;
 
   if (isLoading || error)
     return (
@@ -26,17 +38,26 @@ const MainGallery = () => {
 
   return (
     <div className="mt-24">
+      <div className="flex justify-end mb-4">
+        <Toggle
+          textLeft="All"
+          textRight="Favorites"
+          isFavorite={showFavorites}
+          onHandleChange={handleToggleChange}
+        />
+      </div>
       <Masonry
         className="flex animate-slide-fwd"
+        key={showFavorites ? "favorites-list" : "all-list"}
         breakpointCols={breakpointColumns}
       >
-        {imagesList.map((item) => (
+        {displayedImages.map((item) => (
           <ItemGallery
-            key={item.data[0].nasa_id}
-            image={item.links[0].href}
-            title={item.data[0].title}
-            nasa_id={item.data[0].nasa_id}
-            description={item.data[0].description}
+            key={item.nasa_id}
+            imageUrl={item.imageUrl}
+            title={item.title}
+            nasa_id={item.nasa_id}
+            description={item.description}
           />
         ))}
       </Masonry>
