@@ -18,6 +18,7 @@ const Toggle: React.FC<ToggleProps> = ({
     <div className="flex items-center justify-center space-x-4">
       <span className="text-white font-semibold">{textLeft}</span>
       <ReactToggle
+        className="toggle"
         defaultChecked={isFavorite}
         icons={false}
         onChange={onHandleChange}
