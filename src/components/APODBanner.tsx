@@ -2,13 +2,12 @@ import { Gallery, Item } from "react-photoswipe-gallery";
 
 import useAPOD from "../hooks/api/useAPOD";
 import { formatDate } from "../utils/formatDate";
-import Spinner from "./common/Spinner";
 
 const APODBanner: React.FC = () => {
   const today = formatDate(new Date());
   const { apod, isLoading } = useAPOD(today);
 
-  if (isLoading || !apod) return <Spinner message="Loading..." />;
+  if (isLoading || !apod) return null;
 
   return (
     <>

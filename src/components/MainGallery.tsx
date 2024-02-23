@@ -1,6 +1,7 @@
 import Masonry from "react-masonry-css";
 import useNasaImages from "../hooks/api/useNasaImages";
 import ItemGallery from "./ItemGallery";
+import Spinner from "./common/Spinner";
 
 const breakpointColumns = {
   default: 4,
@@ -14,10 +15,14 @@ const breakpointColumns = {
 const MainGallery = () => {
   const { imagesList, isLoading, error } = useNasaImages();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading images</div>;
-
   console.log(imagesList);
+
+  if (isLoading || error)
+    return (
+      <Spinner
+        message={error ? "Ups!... something went wrong" : "Loading..."}
+      />
+    );
 
   return (
     <div className="mt-24">
@@ -31,7 +36,7 @@ const MainGallery = () => {
             image={item.links[0].href}
             title={item.data[0].title}
             nasa_id={item.data[0].nasa_id}
-            copyright={item.data[0].description} // Asumiendo que quieres usar description como copyright
+            description={item.data[0].description}
           />
         ))}
       </Masonry>

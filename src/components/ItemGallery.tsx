@@ -1,32 +1,30 @@
 import React, { useState } from "react";
+import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { TailSpin } from "react-loader-spinner";
 
 interface ItemGalleryProps {
   image: string;
   title: string;
   nasa_id: string;
-  copyright?: string; // Hacerlo opcional si no siempre se proporciona
+  description: string;
 }
 
 const ItemGallery: React.FC<ItemGalleryProps> = ({
   image,
   title,
   nasa_id,
-  copyright,
+  description,
 }) => {
-  const [postHovered, setPostHovered] = useState(false);
+  const [postHovered, setPostHovered] = useState(true);
   const [isSavingPost, setIsSavingPost] = useState(false);
 
   const onSavePin = () => {
     setIsSavingPost(true);
-    // Lógica para guardar el ítem como favorito
     setIsSavingPost(false);
   };
 
-  // Omitido por brevedad el resto del componente...
-
   return (
-    <div className="m-2">
+    <div className="m-3">
       <div
         onMouseEnter={() => setPostHovered(true)}
         onMouseLeave={() => setPostHovered(false)}
@@ -35,21 +33,28 @@ const ItemGallery: React.FC<ItemGalleryProps> = ({
         {image && <img className="rounded-lg w-full" alt={title} src={image} />}
         {postHovered && (
           <div className="absolute top-0 right-0 p-2">
-            <button
-              type="button"
+            <div
               onClick={onSavePin}
-              className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
+              className="absolute top-0 right-0 m-2 text-gray-400 hover:text-red-500 p-1"
             >
               {isSavingPost ? (
-                <TailSpin color="#fff" height={20} width={20} />
+                <TailSpin color="#fff" height={26} width={26} />
+              ) : postHovered ? (
+                <IoMdHeart
+                  className="text-xl"
+                  style={{ width: "26px", height: "26px" }}
+                />
               ) : (
-                "Save"
+                <IoMdHeartEmpty
+                  className="text-xl"
+                  style={{ width: "26px", height: "26px" }}
+                />
               )}
-            </button>
+            </div>
           </div>
         )}
       </div>
-      <div className="flex gap-2 mt-2 items-center">
+      <div className="flex gap-2 mt-1 mb-3 items-center">
         <p className="font-semibold capitalize">{title}</p>
       </div>
     </div>
