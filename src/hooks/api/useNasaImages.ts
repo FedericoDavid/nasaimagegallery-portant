@@ -34,6 +34,7 @@ const useNasaImages = () => {
     const getListImages = async () => {
       try {
         const { data } = await axios.get<NasaImageCollection>(getUrl());
+
         const items = data.collection.items.map((item) => ({
           nasa_id: item.data[0].nasa_id,
           title: item.data[0].title,

@@ -36,6 +36,25 @@ const MainGallery = () => {
       />
     );
 
+  if ((showFavorites && !favoritesList.length) || !imagesList.length)
+    return (
+      <div className="p-4 flex flex-col justify-center text-center bg-black bg-opacity-30 shadow-md rounded-lg mt-24 h-80 sm:rounded-none sm:rounded-r-lg sm:px-20">
+        <div className="flex justify-end mb-4">
+          <Toggle
+            textLeft="All"
+            textRight="Favorites"
+            isFavorite={showFavorites}
+            onHandleChange={handleToggleChange}
+          />
+        </div>
+        <p className="font-medium text-lg pb-3">
+          {!favoritesList.length
+            ? "You still don’t have favorites... select the best ones on the main page"
+            : "No results found"}
+        </p>
+      </div>
+    );
+
   return (
     <div className="mt-24">
       <div className="flex justify-end mb-4">
