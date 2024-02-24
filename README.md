@@ -12,7 +12,9 @@ We will be able to mark the images we like the most, also having access to a lis
 
 Lastly, by clicking on any of the images displayed, we will be redirected to a new page with more details about it.
 
-To test the project, it only remains to download and install the npm packages
+To test the project, it only remains to download and install the npm packages:
+
+```npm install``` && ```npm run dev```
 
 Also here is the .env:
 
