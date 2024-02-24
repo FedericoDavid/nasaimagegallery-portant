@@ -16,15 +16,17 @@ export const searchTermsKeys = [
 
 const useNasaImages = () => {
   const [imagesList, setImagesList] = useState<ImageItem[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<ErrorState>(null);
 
-  const randomPlanet =
-    searchTermsKeys[Math.floor(Math.random() * searchTermsKeys.length)];
-
   const getUrl = () => {
     const pageSize = 24;
+    const randomPlanet =
+      searchTermsKeys[Math.floor(Math.random() * searchTermsKeys.length)];
     const searchTerm = `${randomPlanet} planet`;
+
+    setSearchTerm(randomPlanet);
 
     return `${
       import.meta.env.VITE_API_URL_IMAGES
@@ -60,7 +62,7 @@ const useNasaImages = () => {
     getListImages();
   }, []);
 
-  return { imagesList, searchTerm: randomPlanet, isLoading, error };
+  return { imagesList, searchTerm, isLoading, error };
 };
 
 export default useNasaImages;
