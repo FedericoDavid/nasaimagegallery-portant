@@ -1,32 +1,23 @@
-# React + TypeScript + Vite
+# NASA Daily Gallery - Portant.co Challenge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+App created w vite - React - Typescript - Tailwind Css
 
-Currently, two official plugins are available:
+## Project Explanation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+On the main page of the application, we will find the banner featuring the Astronomical Picture of the Day, sourced from the corresponding API.
 
-## Expanding the ESLint configuration
+Following a brief introduction, we will discover a list of images selected through a drawing among the most well-known planets.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+We will be able to mark the images we like the most, also having access to a list of all our favorites.
 
-- Configure the top-level `parserOptions` property like this:
+Lastly, by clicking on any of the images displayed, we will be redirected to a new page with more details about it.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
+To test the project, it only remains to download and install the npm packages
+
+Also here is the .env:
+
 ```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
-
-yJdr4wmi6JBoJQq1bgt5jR7g19AUGN85Blh5M86v
+VITE_API_URL=https://api.nasa.gov
+VITE_API_URL_IMAGES=https://images-api.nasa.gov
+VITE_API_KEY=yJdr4wmi6JBoJQq1bgt5jR7g19AUGN85Blh5M86v
+```
