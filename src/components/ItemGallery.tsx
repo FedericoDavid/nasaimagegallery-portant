@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useFavorites } from "../context/FavoritesContext";
-// import { useNavigate } from "react-router-dom";
 
 interface ItemGalleryProps {
   imageUrl: string;
@@ -18,17 +18,20 @@ const ItemGallery: React.FC<ItemGalleryProps> = ({
 }) => {
   const [postHovered, setPostHovered] = useState(false);
 
-  // const navigate = useNavigate();
   const {
     state: { favorites },
     dispatch,
   } = useFavorites();
 
+  const navigate = useNavigate();
+
   const isFavorite = favorites.some((item) => item.nasa_id === nasa_id);
 
-  // const handleImageClick = () => navigate(`/image/${nasa_id}`);
+  const handleImageClick = () => navigate(`/details/${nasa_id}`);
 
-  const toggleFavorite = () => {
+  const toggleFavorite = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+
     if (isFavorite) {
       dispatch({ type: "REMOVE_FAVORITE", payload: { nasa_id } });
     } else {
@@ -40,10 +43,7 @@ const ItemGallery: React.FC<ItemGalleryProps> = ({
   };
 
   return (
-    <div
-      className="m-3"
-      // onClick={handleImageClick}
-    >
+    <div className="m-3" onClick={handleImageClick}>
       <div
         onMouseEnter={() => setPostHovered(true)}
         onMouseLeave={() => setPostHovered(false)}

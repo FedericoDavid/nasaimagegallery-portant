@@ -1,6 +1,6 @@
 import React from "react";
 
-import Layout from "./Layout";
+import Layout from "../components/common/Layout";
 import APODBanner from "../components/APODBanner";
 import MainGallery from "../components/MainGallery";
 
